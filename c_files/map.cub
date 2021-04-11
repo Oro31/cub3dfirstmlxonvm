@@ -1,10 +1,10 @@
-R 640 480
-NO ./sprites/wallNO.XPM
-SO ./sprites/wallSO.XPM
-WE ./sprites/wallWE.XPM
-EA ./sprites/wallEA.XPM
+R 256 256
+NO ../xpmsprites/wood.XPM
+SO ../xpmsprites/redbrick.XPM
+WE ../xpmsprites/colorstone.XPM
+EA ../xpmsprites/bluestone.XPM
 
-S ./sprites/item.XPM
+S ../xpmsprites/barrel.XPM
 F 220,100,0
 C 225,30,0
 

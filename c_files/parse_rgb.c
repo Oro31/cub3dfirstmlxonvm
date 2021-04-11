@@ -43,4 +43,5 @@ void	ft_rgb_fill(t_rgb *rgb, char *line)
 		else
 			ret = 0;
 	}
+	printf("parse rgb OK \n");
 }

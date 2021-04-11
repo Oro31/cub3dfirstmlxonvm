@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.c                                            :+:      :+:    :+:   */
+/*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rvalton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/08 07:52:23 by rvalton           #+#    #+#             */
-/*   Updated: 2021/04/08 10:46:44 by rvalton          ###   ########.fr       */
+/*   Created: 2021/03/31 07:46:41 by rvalton           #+#    #+#             */
+/*   Updated: 2021/04/06 08:42:09 by rvalton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	ft_rgbtocolor(t_rgb *rgb)
+int	ft_init(t_all *vars)
 {
-	int		res;
-
-	printf("encode rgb : first methode = %d \n", 65536 * rgb->r + 256 * rgb->g + rgb->b);
-	res = (rgb->r << 16 | rgb->g << 8 | rgb->b);
-	return (res);
-}
-
-t_rgb	*ft_colortorgb(int color)
-{
-	t_rgb	*rgb;
-
-	rgb->r = (color << 16) & 0xFF;
-	rgb->g = (color << 8) & 0xFF;
-	rgb->b= color & 0xFF;
-	return (rgb);
+	vars->rsl.w = 0;
+	vars->rsl.h = 0;
+	if (!(vars->mlx = mlx_init()))
+		return (0);
+	if (!(vars->map.box = malloc(sizeof(char*))))
+		return (0);
+	vars->map.box[0] = NULL;
+	if (!(vars->spr.path = malloc(sizeof(char*) * 6)))
+		return (0);
+	vars->spr.path[5] = NULL;
+	if (!(vars->spr.data = malloc(sizeof(t_data) * 5)))
+		return (0);
+	vars->spr.nbspr = 5;
+	return (1);
 }

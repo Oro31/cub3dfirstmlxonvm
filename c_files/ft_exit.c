@@ -1,45 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   screen.c                                           :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rvalton <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/02 08:09:32 by rvalton           #+#    #+#             */
-/*   Updated: 2021/04/05 11:15:36 by rvalton          ###   ########.fr       */
+/*   Created: 2021/03/31 07:46:41 by rvalton           #+#    #+#             */
+/*   Updated: 2021/04/06 08:42:09 by rvalton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_parse_rsl(char *line, t_rsl *rsl)
+void	ft_free_sprites(t_all *vars)
 {
-	int		i;
-	int		r;
+	int	i;
 
-	r = 0;
-	i = 2;
-	while (line[i] == ' ')
-		i++;
-	while(ft_isdigit(line[i]))
+	i = 0;
+	while (vars->spr.path[i])
 	{
-		r = r * 10 + (line[i] - 48);
+		free(vars->spr.path[i]);
 		i++;
 	}
-	rsl->w = r;
-	r = 0;
-	while (line[i] == ' ')
-		i++;
-	while (ft_isdigit(line[i]))
+	free(vars->spr.path);
+	i = 0;
+	while (i < vars->spr.nbspr)
 	{
-		r = r * 10 + (line[i] - 48);
+		mlx_destroy_image(vars, vars->spr.data[i].img);
 		i++;
 	}
-	rsl->h = r;
-	printf("parse rsl OK \n");
+	free(vars->spr.data);
 }
 
-void	ft_define_rslwin(t_all *vars)
+void	ft_free_map(t_map *map)
 {
-	vars->win = mlx_new_window(vars->mlx, vars->rsl.w, vars->rsl.h, "cub");
+	int	i;
+
+	i = 0;
+	while (map->box[i])
+	{
+		free(map->box[i]);
+		i++;
+	}
+	free(map);
+}
+
+void	ft_exit(t_all *vars)
+{
+	ft_free_sprites(vars);
+	ft_free_map(&vars->map);
 }

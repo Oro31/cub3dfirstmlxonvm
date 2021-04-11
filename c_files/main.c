@@ -16,92 +16,44 @@ int	main()
 {
 	int	fd;
 	char	*line;
-	char	**texpath;
-	char	**map;
-	t_rgb	ground;
-	t_rgb	sky;
-	int	groundcolor;
-	int	skycolor;
-	void	*mlx;
-	void	*win;
-	t_data	img;
-	int	fstdmsz;
-	int	w;
-	int	h;
+	t_all	vars;
 	int	i;
-	int	j;
 
 	printf("start \n");
-	w = 0;
-	h = 0;
-	fstdmsz = 1;
-	if (!(map = malloc(sizeof(char*))))
-		return (0);
-	map[0] = NULL;
-	if (!(texpath = malloc(sizeof(char*) * 6)))
-		return (0);
-	texpath[5] = NULL;
+	ft_init(&vars);
 	if (!(fd = open("map.cub", O_RDONLY)))
 		return (0);
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (ft_check_line(line) == 2)
-		{
-			j = ft_parse_tex(line, texpath);
-			if (j == 1)
-				printf("parse tex : SUCCES \n");
-		}
-		else if (ft_check_line(line) == 1)
-		{
-			ft_parse_rsl(line, &w, &h);
-			printf("w = %d, h = %d \n", w, h);
-		}
-		else if (ft_check_line(line) == 3)
-		{
-			if (line[0] == 'F')
-				ft_rgb_fill(&ground, line);
-			else
-				ft_rgb_fill(&sky, line);
-		}
-		else if (ft_check_line(line) == 4)
-		{
-			printf("before parse map \n");
-			map = ft_parse_map(line, map);
-		}
-		/*if (ft_parse(line) != 1)
-			return (0);*/
-		/*if (!(map = ft_firstdim_mapalloc(line, map, fstdmsz)))
-			return (0);
-		fstdmsz++;*/
+		printf("gnl running /\n");
+		ft_parse_line(ft_check_line(line), &vars, line);
 	}
-	printf ("ground rgb = %u,%u,%u \n", ground.r, ground.g, ground.b);
-	printf ("sky rgb = %u,%u,%u \n", sky.r, sky.g, sky.b);
-	groundcolor = ft_rgbtocolor(ground.r, ground.g, ground.b);
-	skycolor = ft_rgbtocolor(sky.r, sky.g, sky.b);
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, 640, 480, "SandG");
-	img.img = mlx_new_image(mlx, 640, 480);
-	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.ll, &img.e);
-	ft_mymlx_pixelput(&img, skycolor, groundcolor);
-	mlx_put_image_to_window(mlx, win, img.img, 0, 0);
-	mlx_loop(mlx);
-	printf("is map walled ? %d \n", ft_ismap_walled(map));
+	printf("is map walled ? %d \n", ft_ismap_walled(vars.map.box));
 	i = 0;
-	while (texpath[i])
+	while (vars.spr.path[i])
 	{
-		printf("texpath[%d] = %s \n", i, texpath[i]);
-		free(texpath[i]);
+		printf("texpath[%d] = %s \n", i, vars.spr.path[i]);
 		i++;
 	}
-	free(texpath);
 	i = 0;
-	while(map[i])
+	while(vars.map.box[i])
 	{
-		printf("map[%d] = %s \n", i , map[i]);
-		free(map[i]);
+		printf("map[%d] = %s \n", i , vars.map.box[i]);
 		i++;
 	}
-	free(map);
+	printf("before fill sprites \n");
+	ft_fill_sprites(&vars);
+	vars.ground.color = ft_rgbtocolor(&vars.ground);
+	vars.sky.color = ft_rgbtocolor(&vars.sky);
+	int	d;
+	d = 3 % 64;
+	printf("3 mod 64 = %d \n", d);
+	ft_define_rslwin(&vars);
+	ft_draw(&vars);
+	printf("before exit \n");
+	/*ft_exit(&vars);*/
+	printf("after exit \n");
+	mlx_loop(vars.mlx);
 	close(fd);
 	return (0);
 }
