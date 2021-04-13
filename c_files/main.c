@@ -49,6 +49,8 @@ int	main()
 	d = 3 % 64;
 	printf("3 mod 64 = %d \n", d);
 	ft_define_rslwin(&vars);
+	vars.map.cam.dir = ft_define_cam(&vars.map);
+	printf("posx = %d, posy = %d, dir:%c \n", vars.map.cam.posx, vars.map.cam.posy, vars.map.cam.dir);
 	ft_draw(&vars);
 	printf("before exit \n");
 	/*ft_exit(&vars);*/

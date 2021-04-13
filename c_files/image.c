@@ -38,6 +38,27 @@ void	ft_mymlx_pixelput(t_all *vars, t_data *data)
 	}
 }
 
+int	ft_myxpm_pixelput(t_all *vars, int e, int xdm, t_pos *pos)
+{
+	int	color;
+	int	px;
+	int	py;
+
+	px = ft_get_pxy(pos->x, xdm);
+	py = ft_get_pxy(pos->y, e);
+	color = ft_get_xpm_pixel(vars->spr.data[3], px, py);
+	return (color);
+}
+
+int	ft_get_pxy(int xy, int wh)
+{
+	double	pxy;
+
+	pxy = (double)(xy / ((double)wh / 64));
+	pxy = (int)pxy % 64;
+	return (pxy);
+}
+
 int	ft_get_xpm_pixel(t_data *data, int x, int y)
 {
 	int	color;

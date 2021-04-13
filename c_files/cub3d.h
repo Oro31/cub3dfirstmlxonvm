@@ -54,7 +54,7 @@ typedef	struct	s_cam
 {
 	int		posx;
 	int		posy;
-	int		dir;
+	char		dir;
 }			t_cam;
 
 typedef	struct	s_map
@@ -62,6 +62,12 @@ typedef	struct	s_map
 	char		**box;
 	t_cam		cam;
 }			t_map;
+
+typedef	struct	s_pos
+{
+	int		x;
+	int		y;
+}			t_pos;
 
 typedef	struct	s_all
 {
@@ -91,6 +97,8 @@ int		ft_rgbtocolor(t_rgb *rgb);
 t_rgb		*ft_colortorgb(int color);
 
 void		ft_mymlx_pixelput(t_all *vars, t_data *data);
+int		ft_myxpm_pixelput(t_all *vars, int e, int xdm, t_pos *pos);
+int		ft_get_pxy(int xy, int wh);
 int		ft_get_xpm_pixel(t_data *data, int x, int y);
 
 int		ft_istex_line(char *line);
@@ -114,10 +122,15 @@ int		ft_isdigit(int c);
 
 void		ft_fill_sprites(t_all *vars);
 
+void		ft_put_pixel_on_img(t_data *img, int color, int x, int y);
+int		ft_get_visual(t_all *vars);
 void		ft_draw(t_all *vars);
 
 void		ft_free_sprites(t_all *vars);
 void		ft_free_map(t_map *map);
 void		ft_exit(t_all *vars);
+
+char		ft_define_cam(t_map *map);
+int		ft_isdir(char c);
 
 #endif

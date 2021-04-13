@@ -16,6 +16,9 @@ int	ft_init(t_all *vars)
 {
 	vars->rsl.w = 0;
 	vars->rsl.h = 0;
+	vars->map.cam.posx = 0;
+	vars->map.cam.posy = 0;
+	vars->map.cam.dir = '\0';
 	if (!(vars->mlx = mlx_init()))
 		return (0);
 	if (!(vars->map.box = malloc(sizeof(char*))))

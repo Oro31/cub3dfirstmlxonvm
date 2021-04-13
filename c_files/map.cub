@@ -1,4 +1,4 @@
-R 256 256
+R 275 200
 NO ../xpmsprites/wood.XPM
 SO ../xpmsprites/redbrick.XPM
 WE ../xpmsprites/colorstone.XPM
@@ -10,7 +10,7 @@ C 225,30,0
 
     1111111111
    1100000001
-  1002011111
+   1002011111
 
  1110000101
  100010N001
