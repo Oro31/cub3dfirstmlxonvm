@@ -15,31 +15,26 @@
 void	ft_mymlx_pixelput(t_all *vars, t_data *data)
 {
 	char	*dst;
-	int	color;
 	int	x;
 	int	y;
-	int	px;
-	int	py;
+	double	px;
+	double	py;
 
 
-	x = 0;
-	while (x < vars->rsl.w)
+	x = -1;
+	while (++x < vars->rsl.w)
 	{
-		y = 0;
-		while (y < vars->rsl.h)
+		y = -1;
+		while (++y < vars->rsl.h)
 		{
-			dst = data->addr + (y * data->ll + x * 
-					(data->bpp / 8));
-			px = (x / (vars->rsl.w / 64)) % 64;
-			py = (y / (vars->rsl.h / 64)) % 64;
-			color =	ft_get_xpm_pixel(&vars->spr.data[3], 
-					px, py);
-			if (color == 0)
-				printf("px = %d, py = %d \n", px, py);
-			*(unsigned int*)dst = color;
-			y++;
+			dst = data->addr + (y * data->ll + x * (data->bpp / 8));
+			px = (double)(x / ((double)vars->rsl.w / 64));
+			py = (double)(y / ((double)vars->rsl.h / 64));
+			px = (int)px % 64;
+			py = (int)py % 64;
+			*(unsigned int*)dst = 
+				ft_get_xpm_pixel(&vars->spr.data[3],px, py);
 		}
-		x++;
 	}
 }
 
